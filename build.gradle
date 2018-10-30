@@ -24,3 +24,9 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+compileKotlin {
+    kotlinOptions {
+        freeCompilerArgs = ["-XXLanguage:+InlineClasses"]
+    }
+}
