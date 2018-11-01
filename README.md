@@ -3,6 +3,12 @@ Birthday Kata in functional style with kotlin
 
 The goal is to try to implement birthday kata using a pure functional style
 
+See Matteo Vaccari explanation here:
+
+http://matteo.vaccari.name/blog/archives/154
+
+and his code:
+
 https://github.com/xpmatteo/birthday-greetings-kata
 
 

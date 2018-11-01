@@ -4,12 +4,7 @@ import assertk.assert
 import assertk.assertions.isEqualTo
 import org.junit.jupiter.api.Test
 
-class MainTest {
-
-    @Test
-    fun simpleTest(){
-        assert(5+5).isEqualTo(10)
-    }
+class FileReaderTest {
 
     @Test
     fun readFile(){
@@ -23,15 +18,15 @@ class MainTest {
 
     @Test
     fun readFileMap(){
+        fun skipBlankLines(it: Sequence<CsvRow>) =
+                it.filter { it.row.isNotBlank() }.map { it.row }.toList()
 
         val lines = FileReader("fixtures/myfile"){CsvRow(it)}
-                .runReader{ process(it) }
+                .runReader{ skipBlankLines(it) }
 
         assert(lines.count()).isEqualTo(4)
     }
 
-    private fun process(it: Sequence<CsvRow>) =
-            it.filter { it.row.isNotBlank() }.map { it.row }.toList()
 
 
 }
