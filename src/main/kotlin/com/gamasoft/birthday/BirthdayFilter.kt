@@ -18,3 +18,11 @@ class BirthdayFilter(val today: LocalDate) : (LocalDate) -> Boolean {
             && dataOfBirth.dayOfMonth == 29
             && today.dayOfMonth == 28
 }
+
+class EmployeeBirthdayFilter(val today: LocalDate) : (Employee) -> Boolean {
+
+    val birthdayFilter = BirthdayFilter(today)
+
+    override fun invoke(e: Employee): Boolean  = birthdayFilter(e.dateOfBirth)
+
+}
