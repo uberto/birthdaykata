@@ -7,12 +7,20 @@ fun main(args: Array<String>){
     val filename = args[1]
     val emplFilter = EmployeeBirthdayFilter(LocalDate.now())
     val emailTemplate = EmailTemplate("Happy birthday, dear %!")
+    val emailSender = EmailSender("emailServer")
 
-    val emails = FileReader(filename){CsvRow(it)}
-            .map { it.toEmployee() }
-            .runReader { it.filter(emplFilter).toList() }
-            .map(emailTemplate)
-            .forEach { println("Sending email: $it") }
+
+    FileReader(filename){CsvRow(it).toEmployee()}
+            .runReader { it.filter(emplFilter)
+                         .map(emailTemplate)
+                         .map(emailSender)
+            }.filterNotNull().forEach {
+                println("Sent email with error: it")
+            }
+}
+
+
+
 
 
 

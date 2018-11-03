@@ -7,7 +7,7 @@ data class FileReader<T: Any>(val filename: String, val f: (String) -> T) {
 
     private val file by lazy { File(filename) }
 
-    fun <U> runReader(g: (Sequence<T>) -> U ): U = file.useLines { g(it.drop(1).map(f)) }
+    fun <U> runReader(fold: (Sequence<T>) -> U ): U = file.useLines { fold(it.drop(1).map(f)) }
 
     fun <U: Any> map(g: (T) -> U): FileReader<U> = FileReader(filename, {g(f(it))})
 
