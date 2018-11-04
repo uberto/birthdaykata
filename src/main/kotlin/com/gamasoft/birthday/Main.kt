@@ -11,9 +11,10 @@ fun main(args: Array<String>){
 
 
     sendGreetingsToAll(filename, today, emailTemplate, emailSender)
+            .forEach{println("email error $it")}
 }
 
-fun sendGreetingsToAll(filename: String, today: LocalDate, emailTemplate: EmailTemplate, emailSender: EmailSender) {
+fun sendGreetingsToAll(filename: String, today: LocalDate, emailTemplate: EmployeeToEmail, emailSender: SendEmail) =
     FileReader(filename) { CsvRow(it).toEmployee() }
             .runReader {
                 it.filter(EmployeeBirthdayFilter(today))
@@ -21,8 +22,6 @@ fun sendGreetingsToAll(filename: String, today: LocalDate, emailTemplate: EmailT
                         .map(emailSender)
                         .filterNotNull()
                         .toList()
-            }.forEach {
-                println("Sent email with error: it")
             }
 
-}
+
