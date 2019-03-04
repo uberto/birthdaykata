@@ -1,4 +1,4 @@
-package com.gamasoft.birthday
+package com.ubertob.birthday
 
 inline class EmailAddr(val emailAddr: String)
 

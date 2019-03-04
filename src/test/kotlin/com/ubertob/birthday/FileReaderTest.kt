@@ -1,4 +1,4 @@
-package com.gamasoft.birthday
+package com.ubertob.birthday
 
 import assertk.assert
 import assertk.assertions.isEqualTo
@@ -9,7 +9,7 @@ class FileReaderTest {
     @Test
     fun readFile(){
 
-        val rf = FileReader("fixtures/wrongFile"){CsvRow(it)}
+        val rf = FileReader("fixtures/wrongFile") { CsvRow(it) }
 
         val lines = rf.runReader{it.toList()}
 
@@ -21,7 +21,7 @@ class FileReaderTest {
         fun skipBlankLines(it: Sequence<CsvRow>) =
                 it.filter { it.row.isNotBlank() }.map { it.row }.toList()
 
-        val lines = FileReader("fixtures/wrongFile"){CsvRow(it)}
+        val lines = FileReader("fixtures/wrongFile") { CsvRow(it) }
                 .runReader{ skipBlankLines(it) }
 
         assert(lines.count()).isEqualTo(4)

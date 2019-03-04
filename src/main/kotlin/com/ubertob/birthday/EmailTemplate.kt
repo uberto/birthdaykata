@@ -1,4 +1,4 @@
-package com.gamasoft.birthday
+package com.ubertob.birthday
 
 typealias EmployeeToEmail = (Employee) -> Email
 

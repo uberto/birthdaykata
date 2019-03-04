@@ -1,4 +1,4 @@
-package com.gamasoft.birthday
+package com.ubertob.birthday
 
 import java.time.LocalDate
 import java.time.Month

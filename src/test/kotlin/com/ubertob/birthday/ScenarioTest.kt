@@ -1,4 +1,4 @@
-package com.gamasoft.birthday
+package com.ubertob.birthday
 
 import assertk.assert
 import assertk.assertions.hasSize

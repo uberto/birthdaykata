@@ -1,4 +1,4 @@
-package com.gamasoft.birthday
+package com.ubertob.birthday
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatterBuilder
@@ -22,8 +22,8 @@ val LOCAL_DATE = DateTimeFormatterBuilder()
 fun CsvRow.toEmployee(): Employee =
         this.row.split(",").let{
             Employee(
-                firstName = it[1].trim(),
-                lastName = it[0].trim(),
-                email = EmailAddr(it[3].trim()),
-                dateOfBirth = LocalDate.parse(it[2].trim(), LOCAL_DATE))
+                    firstName = it[1].trim(),
+                    lastName = it[0].trim(),
+                    email = EmailAddr(it[3].trim()),
+                    dateOfBirth = LocalDate.parse(it[2].trim(), LOCAL_DATE))
 }
