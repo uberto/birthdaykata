@@ -10,17 +10,24 @@ fun main(args: Array<String>){
     val reader = FileReader(filename)
 
     sendGreetingsToAll(reader, today, emailTemplate, EmailSender())
-            .forEach{println("email error $it")}
+            .map{println("email error $it")}
 }
 
-fun sendGreetingsToAll(reader: FileReader, today: LocalDate, emailTemplate: EmployeeToEmail, emailSender: SendEmail) =
+fun sendGreetingsToAll(
+        reader: FileReader,
+        today: LocalDate,
+        emailTemplate: EmployeeToEmail,
+        emailSender: SendEmail
+) =
 
     reader.runReader { CsvRow(it).toEmployee() }
-                .filter(EmployeeBirthdayFilter(today))
-                .map(emailTemplate)
-                .map(emailSender)
-                .filterNotNull()
-                .toList()
+            .map {
+                it.filter(EmployeeBirthdayFilter(today))
+                    .map(emailTemplate)
+                    .map(emailSender)
+                    .filterNotNull()
+                    .toList()
+            }
 
 
 

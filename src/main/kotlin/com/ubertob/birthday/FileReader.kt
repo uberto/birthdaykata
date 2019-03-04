@@ -1,18 +1,20 @@
 package com.ubertob.birthday
 
 
+import com.ubertob.birthday.Outcome.Success
 import java.io.File
-import java.nio.charset.Charset
 
 data class FileReader(val filename: String) {
 
     private val file by lazy { File(filename) }
 
-    fun <T> runReader(f: (String) -> T ): List<T> =
-            file.useLines {
-                it.drop(1)
+    fun <T> runReader(f: (String) -> T ): Outcome<FileError, List<T>> =
+            Outcome.tryThis{
+                file.useLines {
+                    it.drop(1)
                         .map(f)
-                        .toList() }
+                        .toList()
+            }}.mapFailure { FileError(filename, it.t) }
 
 
 
@@ -24,4 +26,8 @@ data class FileReader(val filename: String) {
 //    companion object {
 //        fun <U: Any> flatten(reader: FileReader<FileReader<U>>): FileReader<U> = FileReader(reader.filename, {reader.f(it).runReader { it.first() }} )
 //    }
+}
+
+data class FileError(val filename: String, val throwable: Throwable?): Error{
+    override val msg = "file does not exists! $filename"
 }

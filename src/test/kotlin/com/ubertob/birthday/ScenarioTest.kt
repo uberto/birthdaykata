@@ -3,6 +3,8 @@ package com.ubertob.birthday
 import assertk.assert
 import assertk.assertions.hasSize
 import assertk.assertions.isEmpty
+import assertk.assertions.isEqualTo
+import assertk.assertions.isInstanceOf
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import java.time.Month
@@ -31,21 +33,28 @@ class ScenarioTest {
     fun `happy path`(){
         val r = sendGreetingsToAll(reader, today, template, emailSenderOk)
 
-        assert (r ).isEmpty()
+        assert(r).isInstanceOf(Outcome.Success::class.java)
+        assert ( (r as Outcome.Success).value).isEmpty()
         assert(sentEmails).hasSize(2)
     }
 
 
-//    @Test
-//    fun `csv file with errors`(){
-//        sendGreetingsToAll(reader, today, template, emailSender)
-//    }
+    @Test
+    fun `csv file with errors`(){
+        val r = sendGreetingsToAll(FileReader("NoFile"), today, template, emailSenderOk)
+
+        assert(r).isInstanceOf(Outcome.Failure::class.java)
+        assert ( (r as Outcome.Failure).error.msg)
+                .isEqualTo("file does not exists! NoFile")
+
+    }
 
     @Test
     fun `email server with errors`(){
         val r = sendGreetingsToAll(reader, today, template, emailSenderNotOk)
 
-        assert (r ).hasSize(2)
+        assert(r).isInstanceOf(Outcome.Success::class.java)
+        assert ((r as Outcome.Success).value ).hasSize(2)
 
         assert(sentEmails).hasSize(0)
     }
