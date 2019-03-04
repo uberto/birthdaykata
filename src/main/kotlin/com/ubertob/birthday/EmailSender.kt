@@ -10,8 +10,3 @@ data class UnknownRecipient(val recipient: EmailAddress): EmailError()
 class EmailSender(): SendEmail {
     override fun invoke(email: Email): EmailError? = null //fake server
 }
-
-class EmailSenderFailing(): SendEmail {
-    override fun invoke(email: Email): EmailError? =
-            UnknownRecipient(email.recipient)
-}

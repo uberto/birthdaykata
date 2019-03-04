@@ -24,7 +24,7 @@ class ScenarioTest {
     val template = EmailTemplate("Hello Dear %!")
 
     val filename = "fixtures/bigFile.csv"
-    val reader = FileReader(filename) { CsvRow(it).toEmployee() }
+    val reader = FileReader(filename)
 
 
     @Test

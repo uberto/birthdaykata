@@ -7,20 +7,20 @@ fun main(args: Array<String>){
     val filename = args[1]
     val today = LocalDate.now()
     val emailTemplate = EmailTemplate("Happy birthday, dear %!")
-    val reader = FileReader(filename) { CsvRow(it).toEmployee() }
+    val reader = FileReader(filename)
 
     sendGreetingsToAll(reader, today, emailTemplate, EmailSender())
             .forEach{println("email error $it")}
 }
 
-fun sendGreetingsToAll(reader: FileReader<Employee>, today: LocalDate, emailTemplate: EmployeeToEmail, emailSender: SendEmail) =
+fun sendGreetingsToAll(reader: FileReader, today: LocalDate, emailTemplate: EmployeeToEmail, emailSender: SendEmail) =
 
-    reader.runReader {
-        it.filter(EmployeeBirthdayFilter(today))
+    reader.runReader { CsvRow(it).toEmployee() }
+                .filter(EmployeeBirthdayFilter(today))
                 .map(emailTemplate)
                 .map(emailSender)
                 .filterNotNull()
                 .toList()
-    }
+
 
 

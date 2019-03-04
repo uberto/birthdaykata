@@ -2,12 +2,19 @@ package com.ubertob.birthday
 
 
 import java.io.File
+import java.nio.charset.Charset
 
-data class FileReader<T: Any>(val filename: String, val f: (String) -> T) {
+data class FileReader(val filename: String) {
 
     private val file by lazy { File(filename) }
 
-    fun <U> runReader(fold: (Sequence<T>) -> U ): U = file.useLines { fold(it.drop(1).map(f)) }
+    fun <T> runReader(f: (String) -> T ): List<T> =
+            file.useLines {
+                it.drop(1)
+                        .map(f)
+                        .toList() }
+
+
 
 // not needed here
 //    fun <U: Any> map(g: (T) -> U): FileReader<U> = FileReader(filename, {g(f(it))})
