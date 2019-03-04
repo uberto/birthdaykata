@@ -17,13 +17,13 @@ Ann, Mary, 1975/09/11, mary.ann@foobar.com""".split("\n").drop(1).map { CsvRow(i
 
     val johnDoe = file[0].toEmployee()
     val maryAnn = file[1].toEmployee()
-    val leapYear = Employee("Leap", "Year", LocalDate.of(1992, Month.FEBRUARY, 29), EmailAddr("ly@foo.com"))
+    val leapYear = Employee("Leap", "Year", LocalDate.of(1992, Month.FEBRUARY, 29), EmailAddress("ly@foo.com"))
     val employees = file.map { it.toEmployee() }
 
     @Test
     fun parseRow(){
-        assert(johnDoe).isEqualTo(Employee("John", "Doe", LocalDate.of(1982, Month.OCTOBER, 8), EmailAddr("john.doe@foobar.com")))
-        assert(maryAnn).isEqualTo(Employee("Mary", "Ann", LocalDate.of(1975, Month.SEPTEMBER, 11), EmailAddr("mary.ann@foobar.com")))
+        assert(johnDoe).isEqualTo(Employee("John", "Doe", LocalDate.of(1982, Month.OCTOBER, 8), EmailAddress("john.doe@foobar.com")))
+        assert(maryAnn).isEqualTo(Employee("Mary", "Ann", LocalDate.of(1975, Month.SEPTEMBER, 11), EmailAddress("mary.ann@foobar.com")))
     }
 
     @Test

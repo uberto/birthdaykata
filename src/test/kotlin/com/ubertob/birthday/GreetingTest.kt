@@ -14,7 +14,7 @@ class GreetingTest {
 
     @Test
     fun createEmail(){
-        val fred = Employee("Fred", "Flintstone", LocalDate.of(-10000, Month.MAY, 1), EmailAddr("fred@flintstone.com"))
+        val fred = Employee("Fred", "Flintstone", LocalDate.of(-10000, Month.MAY, 1), EmailAddress("fred@flintstone.com"))
 
         val happyBirthdayEmailFactory = EmailTemplate(template)
 
@@ -23,7 +23,7 @@ class GreetingTest {
         assertAll{
             assert(email.subject).isEqualTo("Greetings")
             assert(email.text).isEqualTo("Happy Birthday, dear Fred!")
-            assert(email.dest).isEqualTo(fred.email)
+            assert(email.recipient).isEqualTo(fred.email)
         }
     }
 }

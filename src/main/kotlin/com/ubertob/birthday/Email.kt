@@ -1,5 +1,5 @@
 package com.ubertob.birthday
 
-inline class EmailAddr(val emailAddr: String)
+inline class EmailAddress(val emailAddress: String)
 
-data class Email (val dest: EmailAddr, val subject: String, val text: String)
+data class Email (val recipient: EmailAddress, val subject: String, val text: String)

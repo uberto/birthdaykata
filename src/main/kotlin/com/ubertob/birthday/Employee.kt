@@ -7,7 +7,7 @@ import java.time.temporal.ChronoField
 data class Employee(val firstName: String,
                     val lastName: String,
                     val dateOfBirth: LocalDate,
-                    val email: EmailAddr)
+                    val email: EmailAddress)
 
 
 val LOCAL_DATE = DateTimeFormatterBuilder()
@@ -24,6 +24,6 @@ fun CsvRow.toEmployee(): Employee =
             Employee(
                     firstName = it[1].trim(),
                     lastName = it[0].trim(),
-                    email = EmailAddr(it[3].trim()),
+                    email = EmailAddress(it[3].trim()),
                     dateOfBirth = LocalDate.parse(it[2].trim(), LOCAL_DATE))
 }

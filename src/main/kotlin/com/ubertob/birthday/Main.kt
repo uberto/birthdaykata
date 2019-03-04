@@ -7,10 +7,9 @@ fun main(args: Array<String>){
     val filename = args[1]
     val today = LocalDate.now()
     val emailTemplate = EmailTemplate("Happy birthday, dear %!")
-    val emailSender = EmailSender("emailServer")
     val reader = FileReader(filename) { CsvRow(it).toEmployee() }
 
-    sendGreetingsToAll(reader, today, emailTemplate, emailSender)
+    sendGreetingsToAll(reader, today, emailTemplate, EmailSender())
             .forEach{println("email error $it")}
 }
 

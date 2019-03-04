@@ -3,11 +3,15 @@ package com.ubertob.birthday
 typealias SendEmail = (Email) ->  EmailError?
 
 
-sealed class EmailError
+sealed class EmailError: Error
 object ServerConnectionError: EmailError()
-data class UnknownRecipient(val recipient: String): EmailError()
+data class UnknownRecipient(val recipient: EmailAddress): EmailError()
 
-class EmailSender(val emailServer: String): SendEmail {
+class EmailSender(): SendEmail {
     override fun invoke(email: Email): EmailError? = null //fake server
+}
 
+class EmailSenderFailing(): SendEmail {
+    override fun invoke(email: Email): EmailError? =
+            UnknownRecipient(email.recipient)
 }
