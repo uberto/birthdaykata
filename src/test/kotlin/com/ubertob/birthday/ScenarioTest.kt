@@ -59,4 +59,6 @@ class ScenarioTest {
         assert(sentEmails).hasSize(0)
     }
 
+
 }
+
