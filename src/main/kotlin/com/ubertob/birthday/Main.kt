@@ -1,6 +1,5 @@
 package com.ubertob.birthday
 
-import com.ubertob.birthday.Outcome.*
 import java.time.LocalDate
 
 fun main(args: Array<String>){
@@ -8,7 +7,6 @@ fun main(args: Array<String>){
     val filename = args[1]
     val today = LocalDate.now()
     val emailTemplate = EmailTemplate("Happy birthday, dear %!")
-//    val emailTemplateReader = FileReaderFactory   extension for different templates
     val reader = FileReader(filename)
 
     sendGreetingsToAll(reader, today, emailTemplate, EmailSender())

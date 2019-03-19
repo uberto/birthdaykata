@@ -5,7 +5,8 @@ import java.time.Month
 
 class BirthdayFilter(val today: LocalDate) : (LocalDate) -> Boolean {
 
-    override fun invoke(dateOfBirth: LocalDate): Boolean = leapYearException(dateOfBirth) || sameDay(dateOfBirth)
+    override fun invoke(dateOfBirth: LocalDate): Boolean =
+            leapYearException(dateOfBirth) || sameDay(dateOfBirth)
 
     private fun sameDay(dataOfBirth: LocalDate) =
             dataOfBirth.dayOfMonth == today.dayOfMonth && dataOfBirth.month == today.month
@@ -19,10 +20,11 @@ class BirthdayFilter(val today: LocalDate) : (LocalDate) -> Boolean {
             && today.dayOfMonth == 28
 }
 
-class EmployeeBirthdayFilter(val today: LocalDate) : (Employee) -> Boolean {
+data class EmployeeBirthdayFilter(val today: LocalDate) : (Employee) -> Boolean {
 
     val birthdayFilter = BirthdayFilter(today)
 
     override fun invoke(e: Employee): Boolean  = birthdayFilter(e.dateOfBirth)
 
 }
+
