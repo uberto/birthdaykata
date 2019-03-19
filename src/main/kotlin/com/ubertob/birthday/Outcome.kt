@@ -1,12 +1,8 @@
 package com.ubertob.birthday
 
-import java.lang.Exception
 
+sealed class  Outcome<out E: Error, out T: Any> { //Error cannot be marked out because otherwise flatmap become
 
-sealed class  Outcome<out E: Error, out T: Any> {
-
-    data class Success<T: Any>(val value: T): Outcome<Nothing, T>()
-    data class Failure<E: Error>(val error: E): Outcome<E, Nothing>()
 
     fun <U: Any> map(f: (T) -> U): Outcome<E, U> =
             when (this){
@@ -21,7 +17,6 @@ sealed class  Outcome<out E: Error, out T: Any> {
             }
 
 
-
     companion object {
         fun <T: Any> tryThis(block: () -> T): Outcome<ThrowableError, T> =
                 try {
@@ -31,6 +26,26 @@ sealed class  Outcome<out E: Error, out T: Any> {
                 }
     }
 }
+
+data class Success<T: Any>(val value: T): Outcome<Nothing, T>()
+data class Failure<E: Error>(val error: E): Outcome<E, Nothing>()
+
+
+inline fun <T: Any, U: Any, E: Error> Outcome<E, T>.flatMap(f: (T) -> Outcome<E, U>): Outcome<E, U> =
+        when (this) {
+            is Success<T> -> f(value)
+            is Failure<E> -> this
+        }
+
+inline fun <E: Error, T: Any>Outcome<E, T>.mapNullableError(f: (T) -> E?): Outcome<E, Unit> =
+            when (this){
+                is Success<T> -> {
+                    val error = f(this.value)
+                    if (error == null ) Success(Unit) else Failure(error)
+                }
+                is Failure<E> -> this
+            }
+
 
 interface Error{
     val msg: String

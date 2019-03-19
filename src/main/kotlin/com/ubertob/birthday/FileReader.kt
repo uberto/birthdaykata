@@ -1,7 +1,5 @@
 package com.ubertob.birthday
 
-
-import com.ubertob.birthday.Outcome.Success
 import java.io.File
 
 data class FileReader(val filename: String) {
@@ -14,20 +12,21 @@ data class FileReader(val filename: String) {
                     it.drop(1)
                         .map(f)
                         .toList()
-            }}.mapFailure { FileError(filename, it.t) }
+            }}.mapFailure { FileError(filename) }
 
 
 
-// not needed here
-//    fun <U: Any> map(g: (T) -> U): FileReader<U> = FileReader(filename, {g(f(it))})
+// not needed for the exercise
+
+//    fun <U: Any> map(g: (String) -> U): FileReader<U> = FileReader(filename, {g(f(it))})
 //
-//    fun <U: Any> flatmap(g: (T) -> FileReader<U>): FileReader<U> = flatten(map(g))
+//    fun <U: Any> flatmap(g: (String) -> FileReader<U>): FileReader<U> = flatten(map(g))
 //
 //    companion object {
 //        fun <U: Any> flatten(reader: FileReader<FileReader<U>>): FileReader<U> = FileReader(reader.filename, {reader.f(it).runReader { it.first() }} )
 //    }
 }
 
-data class FileError(val filename: String, val throwable: Throwable?): Error{
+data class FileError(val filename: String, val throwable: Throwable? = null): Error{
     override val msg = "file does not exists! $filename"
 }

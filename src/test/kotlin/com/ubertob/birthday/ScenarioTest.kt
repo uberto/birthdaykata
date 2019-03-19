@@ -20,7 +20,7 @@ class ScenarioTest {
     }
 
     val emailSenderNotOk: SendEmail = {
-        ServerConnectionError
+        null
     }
 
     val template = EmailTemplate("Hello Dear %!")
@@ -33,8 +33,8 @@ class ScenarioTest {
     fun `happy path`(){
         val r = sendGreetingsToAll(reader, today, template, emailSenderOk)
 
-        assert(r).isInstanceOf(Outcome.Success::class.java)
-        assert ( (r as Outcome.Success).value).isEmpty()
+        assert(r).isInstanceOf(Success::class.java)
+        assert ( (r as Success).value).isEmpty()
         assert(sentEmails).hasSize(2)
     }
 
@@ -43,8 +43,8 @@ class ScenarioTest {
     fun `csv file with errors`(){
         val r = sendGreetingsToAll(FileReader("NoFile"), today, template, emailSenderOk)
 
-        assert(r).isInstanceOf(Outcome.Failure::class.java)
-        assert ( (r as Outcome.Failure).error.msg)
+        assert(r).isInstanceOf(Failure::class.java)
+        assert ( (r as Failure).error.msg)
                 .isEqualTo("file does not exists! NoFile")
 
     }
@@ -53,8 +53,8 @@ class ScenarioTest {
     fun `email server with errors`(){
         val r = sendGreetingsToAll(reader, today, template, emailSenderNotOk)
 
-        assert(r).isInstanceOf(Outcome.Success::class.java)
-        assert ((r as Outcome.Success).value ).hasSize(2)
+        assert(r).isInstanceOf(Success::class.java)
+        assert ((r as Success).value ).hasSize(0)
 
         assert(sentEmails).hasSize(0)
     }

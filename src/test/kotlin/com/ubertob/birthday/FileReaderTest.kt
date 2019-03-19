@@ -3,8 +3,6 @@ package com.ubertob.birthday
 import assertk.assert
 import assertk.assertions.isEqualTo
 import assertk.fail
-import com.ubertob.birthday.Outcome.Failure
-import com.ubertob.birthday.Outcome.Success
 import org.junit.jupiter.api.Test
 
 class FileReaderTest {
