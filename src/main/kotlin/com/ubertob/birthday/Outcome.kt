@@ -1,7 +1,7 @@
 package com.ubertob.birthday
 
 
-sealed class  Outcome<out E: Error, out T: Any> { //Error cannot be marked out because otherwise flatmap become
+sealed class  Outcome<out E: Error, out T: Any> {
 
 
     fun <U: Any> map(f: (T) -> U): Outcome<E, U> =
@@ -15,7 +15,6 @@ sealed class  Outcome<out E: Error, out T: Any> { //Error cannot be marked out b
                 is Success -> this
                 is Failure -> Failure(f(this.error))
             }
-
 
     companion object {
         fun <T: Any> tryThis(block: () -> T): Outcome<ThrowableError, T> =
