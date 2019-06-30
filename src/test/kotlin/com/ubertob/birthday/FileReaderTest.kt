@@ -1,6 +1,6 @@
 package com.ubertob.birthday
 
-import assertk.assert
+import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.fail
 import org.junit.jupiter.api.Test
@@ -13,7 +13,7 @@ class FileReaderTest {
         val rf = FileReader("fixtures/wrongFile")
 
         when(val lines = rf.runReader{ CsvRow(it) }){
-            is Success -> assert(lines.value.count()).isEqualTo(5)
+            is Success -> assertThat(lines.value.count()).isEqualTo(5)
             is Failure -> fail(lines.error.msg)
         }
 
@@ -28,7 +28,7 @@ class FileReaderTest {
                 .runReader{ CsvRow(it) }.map {it.skipBlankLines()}
 
         when(outcome){
-            is Success -> assert(outcome.value.count()).isEqualTo(4)
+            is Success -> assertThat(outcome.value.count()).isEqualTo(4)
             is Failure -> fail(outcome.error.msg)
         }
     }

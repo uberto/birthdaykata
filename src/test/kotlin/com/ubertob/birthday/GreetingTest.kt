@@ -2,6 +2,7 @@ package com.ubertob.birthday
 
 import assertk.assert
 import assertk.assertAll
+import assertk.assertThat
 import assertk.assertions.isEqualTo
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
@@ -21,9 +22,9 @@ class GreetingTest {
         val email = happyBirthdayEmailFactory(fred)
 
         assertAll{
-            assert(email.subject).isEqualTo("Greetings")
-            assert(email.text).isEqualTo("Happy Birthday, dear Fred!")
-            assert(email.recipient).isEqualTo(fred.email)
+            assertThat(email.subject).isEqualTo("Greetings")
+            assertThat(email.text).isEqualTo("Happy Birthday, dear Fred!")
+            assertThat(email.recipient).isEqualTo(fred.email)
         }
     }
 }

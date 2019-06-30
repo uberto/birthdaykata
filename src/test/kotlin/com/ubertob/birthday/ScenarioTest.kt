@@ -1,6 +1,7 @@
 package com.ubertob.birthday
 
 import assertk.assert
+import assertk.assertThat
 import assertk.assertions.hasSize
 import assertk.assertions.isEmpty
 import assertk.assertions.isEqualTo
@@ -33,9 +34,9 @@ class ScenarioTest {
     fun `happy path`(){
         val r = sendGreetingsToAll(reader, today, template, emailSenderOk)
 
-        assert(r).isInstanceOf(Success::class.java)
-        assert ( (r as Success).value).isEmpty()
-        assert(sentEmails).hasSize(2)
+        assertThat(r).isInstanceOf(Success::class.java)
+        assertThat( (r as Success).value).isEmpty()
+        assertThat(sentEmails).hasSize(2)
     }
 
 
@@ -43,8 +44,8 @@ class ScenarioTest {
     fun `csv file with errors`(){
         val r = sendGreetingsToAll(FileReader("NoFile"), today, template, emailSenderOk)
 
-        assert(r).isInstanceOf(Failure::class.java)
-        assert ( (r as Failure).error.msg)
+        assertThat(r).isInstanceOf(Failure::class.java)
+        assertThat ( (r as Failure).error.msg)
                 .isEqualTo("file does not exists! NoFile")
 
     }
@@ -53,10 +54,10 @@ class ScenarioTest {
     fun `email server with errors`(){
         val r = sendGreetingsToAll(reader, today, template, emailSenderNotOk)
 
-        assert(r).isInstanceOf(Success::class.java)
-        assert ((r as Success).value ).hasSize(0)
+        assertThat(r).isInstanceOf(Success::class.java)
+        assertThat ((r as Success).value ).hasSize(0)
 
-        assert(sentEmails).hasSize(0)
+        assertThat(sentEmails).hasSize(0)
     }
 
 
